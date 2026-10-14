@@ -78,36 +78,36 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 .hero .lede strong{color:var(--cream);font-weight:500}
 
 /* ===== timeline ===== */
-.tl{margin-top:clamp(44px,7vw,80px);background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.8)}
-.tl-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.72rem;color:var(--smoke);letter-spacing:.06em}
-.tl-bar .tc{font-size:1.05rem;font-weight:600;color:var(--ember);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.tl{margin-top:clamp(32px,5vw,56px);background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;opacity:.72;max-width:860px}
+.tl-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 12px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.72rem;color:var(--smoke);letter-spacing:.06em}
+.tl-bar .tc{font-size:.9rem;font-weight:600;color:var(--ember);letter-spacing:.04em;font-variant-numeric:tabular-nums}
 .tl-bar .seq{text-transform:uppercase}
 .tl-body{display:grid;grid-template-columns:44px 1fr}
 .tl-heads{border-right:1px solid var(--line)}
-.tl-heads div{height:30px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:.68rem;color:var(--smoke);border-bottom:1px solid rgba(58,47,36,.5)}
-.tl-heads div:first-child{height:26px;border-bottom-color:var(--line)}
+.tl-heads div{height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:.68rem;color:var(--smoke);border-bottom:1px solid rgba(58,47,36,.5)}
+.tl-heads div:first-child{height:22px;border-bottom-color:var(--line)}
 .tl-area{position:relative;min-width:0;overflow:hidden}
-.tl-ruler{height:26px;position:relative;border-bottom:1px solid var(--line)}
+.tl-ruler{height:22px;position:relative;border-bottom:1px solid var(--line)}
 .tl-ruler .tick{position:absolute;bottom:0;width:1px;height:6px;background:var(--line)}
 .tl-ruler .tick.major{height:12px;background:var(--smoke);opacity:.7}
 .tl-ruler .lbl{position:absolute;top:3px;font-family:var(--f-mono);font-size:.62rem;color:var(--smoke);transform:translateX(4px);white-space:nowrap}
-.tl-track{height:30px;position:relative;border-bottom:1px solid rgba(58,47,36,.5)}
-.tl-clip{position:absolute;top:4px;bottom:4px;border-radius:4px;overflow:hidden;font-family:var(--f-mono);font-size:.6rem;padding:0 6px;display:flex;align-items:center;white-space:nowrap;color:rgba(241,228,204,.75);border:1px solid rgba(255,255,255,.07);transition:filter .15s, box-shadow .15s}
+.tl-track{height:22px;position:relative;border-bottom:1px solid rgba(58,47,36,.5)}
+.tl-clip{position:absolute;top:3px;bottom:3px;border-radius:4px;overflow:hidden;font-family:var(--f-mono);font-size:.6rem;padding:0 6px;display:flex;align-items:center;white-space:nowrap;color:rgba(241,228,204,.75);border:1px solid rgba(255,255,255,.07);transition:filter .15s, box-shadow .15s}
 .tl-clip.v{background:linear-gradient(180deg,var(--clip-v2),var(--clip-v))}
 .tl-clip.t{background:linear-gradient(180deg,#7a5a2a,#5c4220);color:var(--cream)}
 .tl-clip.a{background:var(--clip-a)}
 .tl-clip.m{background:var(--clip-m)}
-.tl-clip.live{filter:brightness(1.4);box-shadow:inset 0 0 0 1px var(--ember)}
+.tl-clip.live{filter:brightness(1.18)}
 .tl-clip .wave{position:absolute;inset:3px 4px;display:flex;align-items:center;gap:1px;opacity:.75}
 .tl-clip .wave i{flex:1;background:rgba(160,200,150,.75);border-radius:1px;min-width:1px}
 .tl-clip.m .wave i{background:rgba(160,170,220,.7)}
 .tl-needle{position:absolute;top:0;bottom:0;left:0;width:0;z-index:3;pointer-events:none;will-change:transform}
-.tl-needle::before{content:"";position:absolute;top:0;left:-7px;border-left:7px solid transparent;border-right:7px solid transparent;border-top:11px solid var(--ember);filter:drop-shadow(0 0 6px var(--ember))}
-.tl-needle::after{content:"";position:absolute;top:9px;bottom:0;left:-1px;width:2px;background:var(--ember);box-shadow:0 0 10px var(--ember)}
+.tl-needle::before{content:"";position:absolute;top:0;left:-7px;border-left:7px solid transparent;border-right:7px solid transparent;border-top:11px solid var(--ember);filter:drop-shadow(0 0 3px var(--ember))}
+.tl-needle::after{content:"";position:absolute;top:9px;bottom:0;left:-1px;width:2px;background:var(--ember);box-shadow:0 0 4px var(--ember)}
 @media (max-width:560px){.tl-body{grid-template-columns:34px 1fr}.tl-heads div{font-size:.6rem}.tl-clip{font-size:0}.tl-ruler .lbl:nth-of-type(even){display:none}}
 
 /* seções */
-section{padding-block:clamp(48px,8vw,100px)}
+section{scroll-margin-top:60px;padding-block:clamp(48px,8vw,100px)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,5vw,48px)}
 .eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ember)}
 h2{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5.2vw,3.6rem);line-height:1.05;letter-spacing:-.04em;margin:10px 0 0;text-wrap:balance}
@@ -148,8 +148,15 @@ dialog.player::backdrop{background:rgba(8,6,4,.9);backdrop-filter:blur(6px)}
 .player .close{all:unset;cursor:pointer;color:var(--cream);border:1px solid var(--line);padding:8px 16px;border-radius:999px}
 .player .close:hover{border-color:var(--ember)}
 
+.cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:14px 24px;border-radius:999px;background:var(--ember);color:var(--ink);
+  font-family:var(--f-body);font-weight:700;font-size:1rem;text-decoration:none;box-shadow:0 10px 36px -12px rgba(233,166,63,.7);transition:transform .2s, box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(233,166,63,.85)}
+.cta svg{width:18px;height:18px;fill:currentColor}
+.cta .arr{animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(3px)}}
+@media (max-width:600px){.cta{width:100%;justify-content:center}}
 .reveal{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-.reveal.d2{animation-delay:.12s}.reveal.d3{animation-delay:.24s}.reveal.d4{animation-delay:.36s}
+.reveal.d2{animation-delay:.12s}.reveal.d3{animation-delay:.24s}.reveal.d4{animation-delay:.36s}.reveal.d5{animation-delay:.48s}
 @keyframes rise{from{transform:translateY(18px);opacity:.001}to{transform:none;opacity:1}}
 </style>
 </head>
@@ -168,8 +175,13 @@ dialog.player::backdrop{background:rgba(8,6,4,.9);backdrop-filter:blur(6px)}
     <div class="rec reveal"><span class="dot" aria-hidden="true"></span> Editor de vídeo</div>
     <h1 class="reveal d2">Cortes que <span class="hl">seguram</span> o olhar.</h1>
     <p class="lede reveal d3">Edito Reels e conteúdo vertical para criadores e marcas: <strong>ritmo, cortes precisos e legendas</strong> que fazem a pessoa assistir até o fim.</p>
+    <a class="cta reveal d4" href="#trabalhos">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      Ver vídeos
+      <svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16.5 5.5 10l1.4-1.4 5.1 5.1 5.1-5.1 1.4 1.4z"/></svg>
+    </a>
 
-    <div class="tl reveal d4" aria-hidden="true">
+    <div class="tl reveal d5" aria-hidden="true">
       <div class="tl-bar">
         <span class="tc" id="tc">00:00:00:00</span>
         <span>30 fps</span>
@@ -305,7 +317,7 @@ dlg.addEventListener("click", e=>{ if(e.target.classList.contains("stage")) clos
   }
   const needle = document.getElementById("needle"), area = document.getElementById("tlArea"), tc = document.getElementById("tc");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const LOOP = 18000;
+  const LOOP = 26000;
   let w = area.clientWidth;
   if("ResizeObserver" in window) new ResizeObserver(()=>{ w = area.clientWidth; }).observe(area);
   function draw(p){
