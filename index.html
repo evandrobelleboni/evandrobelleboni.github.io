@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evandro Belleboni · Editor de Vídeo</title>
+<meta name="description" content="Evandro Belleboni, editor de vídeo. Reels e conteúdo vertical com ritmo, cortes precisos e legendas.">
+<meta property="og:title" content="Evandro Belleboni · Editor de Vídeo">
+<meta property="og:description" content="Reels com ritmo e cortes que prendem a atenção. Veja o portfólio.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#15110d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap">
+<link rel="preload" href="fontes/nt-mikella-bold.woff" as="font" type="font/woff" crossorigin>
+<style>
+/* Layout: noite de estúdio — fundo escuro, luz âmbar vinda do canto, uma timeline de edição viva sob a headline e os trabalhos em 9:16 */
+:root{
+  --ink:#15110d;
+  --panel:#1a140f;
+  --line:#3a2f24;
+  --cream:#f1e4cc;
+  --smoke:#9c8d78;
+  --ember:#e9a63f;
+  --clip-v:#5a3f22;
+  --clip-v2:#6e4a26;
+  --clip-a:#2e3a2c;
+  --clip-m:#2b2f3d;
+  --f-accent:"NT Mikella", Georgia, "Times New Roman", serif; /* palavras destaque */
+  --f-display:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+@font-face{font-family:"NT Mikella";src:url("fontes/nt-mikella-bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+*,*::before,*::after{box-sizing:border-box}
+/* destaque: Mikella amarela, brilho suave e grão fino */
+.hl{font-family:var(--f-accent);font-weight:700;font-style:normal;letter-spacing:0;color:var(--ember);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='1' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.17  0 0 0 0 0.04  0 0 0 -1 0.62'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>"),
+    linear-gradient(var(--ember),var(--ember));
+  background-size:100px 100px, 100% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 12px rgba(233,166,63,.38));
+  padding-inline:.04em}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:var(--f-body);font-size:1.05rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px}
+
+.glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60vmax 50vmax at 88% -8%, rgba(233,166,63,.22), transparent 60%),
+             radial-gradient(40vmax 40vmax at -10% 110%, rgba(150,80,30,.12), transparent 60%)}
+.grain{position:fixed;inset:-50%;pointer-events:none;z-index:1;opacity:.06;background-size:120px 120px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='2.4' numOctaves='1' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;
+  padding-left:max(20px, env(safe-area-inset-left,0px));
+  padding-right:max(20px, env(safe-area-inset-right,0px))}
+
+header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  background:rgba(21,17,13,.72);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.brand{font-family:var(--f-display);font-weight:600;font-size:1.05rem;text-decoration:none;letter-spacing:-.01em;display:flex;gap:.35em;align-items:baseline}
+.brand .hl{font-size:1.3rem}
+
+/* hero */
+.hero{padding-block:clamp(56px,10vw,120px) clamp(40px,7vw,72px)}
+.rec{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);display:flex;align-items:center;gap:10px}
+.rec .dot{width:9px;height:9px;border-radius:50%;background:#e2553a;box-shadow:0 0 12px #e2553a;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2.8rem,9.5vw,7.6rem);line-height:.98;letter-spacing:-.045em;margin:22px 0 0;text-wrap:balance}
+.hero h1 .hl{font-size:1.08em;letter-spacing:0}
+.hero .lede{max-width:38ch;font-size:clamp(1.1rem,2.1vw,1.35rem);color:var(--smoke);margin:28px 0 0}
+.hero .lede strong{color:var(--cream);font-weight:500}
+
+/* ===== timeline ===== */
+.tl{margin-top:clamp(44px,7vw,80px);background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.8)}
+.tl-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:.72rem;color:var(--smoke);letter-spacing:.06em}
+.tl-bar .tc{font-size:1.05rem;font-weight:600;color:var(--ember);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.tl-bar .seq{text-transform:uppercase}
+.tl-body{display:grid;grid-template-columns:44px 1fr}
+.tl-heads{border-right:1px solid var(--line)}
+.tl-heads div{height:30px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:.68rem;color:var(--smoke);border-bottom:1px solid rgba(58,47,36,.5)}
+.tl-heads div:first-child{height:26px;border-bottom-color:var(--line)}
+.tl-area{position:relative;min-width:0;overflow:hidden}
+.tl-ruler{height:26px;position:relative;border-bottom:1px solid var(--line)}
+.tl-ruler .tick{position:absolute;bottom:0;width:1px;height:6px;background:var(--line)}
+.tl-ruler .tick.major{height:12px;background:var(--smoke);opacity:.7}
+.tl-ruler .lbl{position:absolute;top:3px;font-family:var(--f-mono);font-size:.62rem;color:var(--smoke);transform:translateX(4px);white-space:nowrap}
+.tl-track{height:30px;position:relative;border-bottom:1px solid rgba(58,47,36,.5)}
+.tl-clip{position:absolute;top:4px;bottom:4px;border-radius:4px;overflow:hidden;font-family:var(--f-mono);font-size:.6rem;padding:0 6px;display:flex;align-items:center;white-space:nowrap;color:rgba(241,228,204,.75);border:1px solid rgba(255,255,255,.07);transition:filter .15s, box-shadow .15s}
+.tl-clip.v{background:linear-gradient(180deg,var(--clip-v2),var(--clip-v))}
+.tl-clip.t{background:linear-gradient(180deg,#7a5a2a,#5c4220);color:var(--cream)}
+.tl-clip.a{background:var(--clip-a)}
+.tl-clip.m{background:var(--clip-m)}
+.tl-clip.live{filter:brightness(1.4);box-shadow:inset 0 0 0 1px var(--ember)}
+.tl-clip .wave{position:absolute;inset:3px 4px;display:flex;align-items:center;gap:1px;opacity:.75}
+.tl-clip .wave i{flex:1;background:rgba(160,200,150,.75);border-radius:1px;min-width:1px}
+.tl-clip.m .wave i{background:rgba(160,170,220,.7)}
+.tl-needle{position:absolute;top:0;bottom:0;left:0;width:0;z-index:3;pointer-events:none;will-change:transform}
+.tl-needle::before{content:"";position:absolute;top:0;left:-7px;border-left:7px solid transparent;border-right:7px solid transparent;border-top:11px solid var(--ember);filter:drop-shadow(0 0 6px var(--ember))}
+.tl-needle::after{content:"";position:absolute;top:9px;bottom:0;left:-1px;width:2px;background:var(--ember);box-shadow:0 0 10px var(--ember)}
+@media (max-width:560px){.tl-body{grid-template-columns:34px 1fr}.tl-heads div{font-size:.6rem}.tl-clip{font-size:0}.tl-ruler .lbl:nth-of-type(even){display:none}}
+
+/* seções */
+section{padding-block:clamp(48px,8vw,100px)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,5vw,48px)}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ember)}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5.2vw,3.6rem);line-height:1.05;letter-spacing:-.04em;margin:10px 0 0;text-wrap:balance}
+h2 .hl{font-size:1.08em}
+.sec-head p{max-width:42ch;color:var(--smoke);margin:0}
+
+/* grade de reels */
+.reels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,22px)}
+@media (max-width:900px){.reels{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:600px){.reels{grid-template-columns:repeat(2,minmax(0,1fr))}.clip .play{width:48px;height:48px;margin:-24px 0 0 -24px}.clip .tag{font-size:.8rem}}
+.clip{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:12px;min-width:0}
+.clip .frame{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:14px;overflow:hidden;background:linear-gradient(160deg,#3a2a18,#16110c 70%);border:1px solid var(--line);transition:border-color .3s, transform .4s cubic-bezier(.2,.7,.2,1)}
+.clip .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.95) brightness(.88);transition:filter .4s, transform .6s}
+.clip .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,6,.85),transparent 45%)}
+.clip .num{position:absolute;left:14px;top:12px;z-index:2;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;color:var(--cream);opacity:.85}
+.clip .fallback{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-accent);font-size:4.5rem;color:var(--ember);opacity:.5}
+.clip .play{position:absolute;z-index:2;left:50%;top:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;background:rgba(233,166,63,.92);display:grid;place-items:center;transform:scale(.85);opacity:0;transition:.3s}
+.clip .play svg{width:22px;height:22px;margin-left:3px;fill:var(--ink)}
+.clip .meta{position:absolute;z-index:2;left:14px;right:14px;bottom:12px;font-family:var(--f-mono);font-size:.7rem;color:var(--smoke);display:flex;justify-content:space-between}
+.clip:hover .frame,.clip:focus-visible .frame{border-color:var(--ember);transform:translateY(-4px)}
+.clip:hover img{filter:saturate(1.05) brightness(1);transform:scale(1.03)}
+.clip:hover .play,.clip:focus-visible .play{opacity:1;transform:scale(1)}
+@media (hover:none){.clip .play{opacity:1;transform:scale(.8)}}
+.clip .title{font-family:var(--f-display);font-size:1.05rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
+.clip .tag{font-size:.88rem;color:var(--smoke)}
+
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--smoke);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--f-mono)}
+
+/* player */
+dialog.player{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;color:var(--cream)}
+dialog.player::backdrop{background:rgba(8,6,4,.9);backdrop-filter:blur(6px)}
+.player .stage{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.player .box{position:relative;height:min(82vh,82dvh);aspect-ratio:9/16;max-width:100%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 120px -20px rgba(233,166,63,.35)}
+.player video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.player .bar{display:flex;gap:16px;align-items:center;font-family:var(--f-mono);font-size:.8rem;color:var(--smoke)}
+.player .close{all:unset;cursor:pointer;color:var(--cream);border:1px solid var(--line);padding:8px 16px;border-radius:999px}
+.player .close:hover{border-color:var(--ember)}
+
+.reveal{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.reveal.d2{animation-delay:.12s}.reveal.d3{animation-delay:.24s}.reveal.d4{animation-delay:.36s}
+@keyframes rise{from{transform:translateY(18px);opacity:.001}to{transform:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="hl">Evandro Belleboni</span></a>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="wrap hero">
+    <div class="rec reveal"><span class="dot" aria-hidden="true"></span> Editor de vídeo</div>
+    <h1 class="reveal d2">Cortes que <span class="hl">seguram</span> o olhar.</h1>
+    <p class="lede reveal d3">Edito Reels e conteúdo vertical para criadores e marcas: <strong>ritmo, cortes precisos e legendas</strong> que fazem a pessoa assistir até o fim.</p>
+
+    <div class="tl reveal d4" aria-hidden="true">
+      <div class="tl-bar">
+        <span class="tc" id="tc">00:00:00:00</span>
+        <span>30 fps</span>
+      </div>
+      <div class="tl-body">
+        <div class="tl-heads"><div></div><div>V2</div><div>V1</div><div>A1</div><div>A2</div></div>
+        <div class="tl-area" id="tlArea">
+          <div class="tl-ruler" id="ruler"></div>
+          <div class="tl-track" id="tV2"></div>
+          <div class="tl-track" id="tV1"></div>
+          <div class="tl-track" id="tA1"></div>
+          <div class="tl-track" id="tA2"></div>
+          <div class="tl-needle" id="needle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="trabalhos">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">Trabalhos selecionados</div>
+          <h2>Reels <span class="hl">dinâmicos</span></h2>
+        </div>
+        <p>Toque em um vídeo para assistir. Formato vertical, pensado para Instagram, TikTok e Shorts.</p>
+      </div>
+      <div class="reels" id="reels"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> Evandro Belleboni</span>
+    <a href="https://www.instagram.com/oevandrobelleboni/" target="_blank" rel="noopener">@oevandrobelleboni</a>
+  </div>
+</footer>
+
+<dialog class="player" id="player" aria-label="Player de vídeo">
+  <div class="stage">
+    <div class="box"><video id="vid" controls playsinline preload="none"></video></div>
+    <div class="bar">
+      <span id="ptitle"></span>
+      <button class="close" id="pclose" type="button">Fechar ✕</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+/* ====== EDITE AQUI ======
+   Cada vídeo fica na pasta "videos" e a capa na pasta "capas", com o mesmo nome. */
+const REELS = [
+  { file:"reels-01", title:"Reels dinâmico 1", tag:"Cortes rápidos · legendas" },
+  { file:"reels-02", title:"Reels dinâmico 2", tag:"Ritmo · sound design" },
+  { file:"reels-03", title:"Reels dinâmico 3", tag:"Trilha e transições" },
+  { file:"reels-04", title:"Reels dinâmico 4", tag:"Gancho + retenção" },
+  { file:"reels-05", title:"Reels dinâmico 5", tag:"Legendas animadas" },
+  { file:"reels-06", title:"Reels dinâmico 6", tag:"Montagem dinâmica" },
+  { file:"reels-07", title:"Reels dinâmico 7", tag:"Projeto completo" },
+];
+/* ======================== */
+
+const pad = n => String(n).padStart(2,"0");
+
+/* grade */
+const grid = document.getElementById("reels");
+REELS.forEach((r,i)=>{
+  const b = document.createElement("button");
+  b.className = "clip"; b.type = "button";
+  b.setAttribute("aria-label","Assistir " + r.title);
+  b.innerHTML = `
+    <div class="frame">
+      <div class="fallback" aria-hidden="true">${pad(i+1)}</div>
+      <img loading="lazy" decoding="async" alt="" src="capas/${r.file}.jpg">
+      <span class="num">CLIP ${pad(i+1)}</span>
+      <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="meta"><span>9:16</span><span>REELS</span></span>
+    </div>
+    <div><div class="title">${r.title}</div><div class="tag">${r.tag}</div></div>`;
+  b.querySelector("img").addEventListener("error", e => e.target.remove());
+  b.addEventListener("click", ()=>openPlayer(r));
+  grid.appendChild(b);
+});
+
+/* player */
+const dlg = document.getElementById("player"), vid = document.getElementById("vid");
+function openPlayer(r){
+  vid.poster = `capas/${r.file}.jpg`;
+  vid.src = `videos/${r.file}.mp4`;
+  document.getElementById("ptitle").textContent = r.title;
+  dlg.showModal();
+  vid.play().catch(()=>{});
+}
+function closePlayer(){ dlg.close(); }
+document.getElementById("pclose").addEventListener("click", closePlayer);
+dlg.addEventListener("close", ()=>{ vid.pause(); vid.removeAttribute("src"); vid.load(); });
+dlg.addEventListener("click", e=>{ if(e.target.classList.contains("stage")) closePlayer(); });
+
+/* ===== timeline ===== */
+(function(){
+  const DUR = 60, FPS = 30;
+  const ruler = document.getElementById("ruler");
+  for(let s=0; s<=DUR; s+=1){
+    const x = s/DUR*100;
+    const t = document.createElement("span");
+    t.className = "tick" + (s%5===0 ? " major" : "");
+    t.style.left = x+"%"; ruler.appendChild(t);
+    if(s<DUR && s%10===0){ const l=document.createElement("span"); l.className="lbl"; l.style.left=x+"%"; l.textContent="00:00:"+pad(s)+":00"; ruler.appendChild(l); }
+  }
+  const tracks = {
+    tV2:[["t",2,9,"TÍTULO"],["t",31,37,"LEGENDA"],["t",48,54,"LEGENDA"]],
+    tV1:[["v",0,6.5,"CLIP 01"],["v",6.5,11,"CLIP 02"],["v",11,19.5,"CLIP 03"],["v",19.5,24,"CLIP 04"],["v",24,33,"CLIP 05"],["v",33,41.5,"CLIP 06"],["v",41.5,47,"CLIP 07"],["v",47,60,"CLIP 08"]],
+    tA1:[["a",0,11],["a",12,24],["a",25,41.5],["a",43,60]],
+    tA2:[["m",0,60]],
+  };
+  let seed = 7; const rnd = ()=> (seed = (seed*9301+49297)%233280)/233280;
+  const all = [];
+  for(const id in tracks){
+    const el = document.getElementById(id);
+    tracks[id].forEach(([k,a,b,label])=>{
+      const c = document.createElement("div");
+      c.className = "tl-clip "+k;
+      c.style.left = (a/DUR*100)+"%"; c.style.width = ((b-a)/DUR*100)+"%";
+      if(k==="a"||k==="m"){
+        const w = document.createElement("div"); w.className="wave";
+        const n = Math.round((b-a)*(k==="m"?2.2:3));
+        for(let i=0;i<n;i++){ const bar=document.createElement("i"); bar.style.height=(k==="m"? 30+rnd()*45 : 15+rnd()*85)+"%"; w.appendChild(bar); }
+        c.appendChild(w);
+      } else c.textContent = label;
+      el.appendChild(c); all.push({el:c,a,b});
+    });
+  }
+  const needle = document.getElementById("needle"), area = document.getElementById("tlArea"), tc = document.getElementById("tc");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const LOOP = 18000;
+  let w = area.clientWidth;
+  if("ResizeObserver" in window) new ResizeObserver(()=>{ w = area.clientWidth; }).observe(area);
+  function draw(p){
+    const sec = p*DUR;
+    needle.style.transform = `translateX(${p*w}px)`;
+    tc.textContent = `00:00:${pad(Math.floor(sec))}:${pad(Math.floor((sec%1)*FPS))}`;
+    all.forEach(c=> c.el.classList.toggle("live", sec>=c.a && sec<c.b));
+  }
+  if(reduce){ draw(.38); return; }
+  const t0 = performance.now();
+  (function tick(now){ draw(((now-t0)%LOOP)/LOOP); requestAnimationFrame(tick); })(t0);
+})();
+
+document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
